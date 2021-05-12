@@ -1,0 +1,18 @@
+{
+  "name": "klaviyo-serverless",
+  "description": "Subscribepro webhook klaviyo integration",
+  "version": "1.0.0",
+  "dependencies": {
+    "netlify-cli": "^3.29.7",
+    "netlify-lambda": "^2.0.6",
+    "node-fetch": "^2.3.0"
+  },
+  "keywords": [
+    "klaviyo"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "local": "netlify dev"
+  }
+}
