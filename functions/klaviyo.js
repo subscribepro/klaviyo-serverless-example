@@ -44,7 +44,9 @@ exports.handler = async (event, context) => {
       body: `Bad request`,
     };
   }
+  console.log(webhook);
   if (!HANDLED_TYPES.includes(webhook.type)) {
+    console.log("Dropping webhook", webhook.type);
     return {
       statusCode: 200,
       body: `Webhook of type ${webhook.type} is not handled!`,
