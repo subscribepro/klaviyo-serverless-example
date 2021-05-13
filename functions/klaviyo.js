@@ -37,7 +37,7 @@ exports.handler = async (event, context) => {
   }
   let webhook;
   try {
-    webhook = JSON.parse(event.body).webhook_event;
+    webhook = JSON.parse(JSON.parse(event.body).webhook_event);
   } catch (error) {
     return {
       statusCode: 400,
