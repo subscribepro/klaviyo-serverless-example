@@ -23,7 +23,7 @@ const klaviyoTrack = async (payload) => {
 
 exports.handler = async (event, context) => {
   console.log(event.body);
-  console.log("Hash verification ", event.headers["Sp-Hmac"]);
+  console.log("Hash verification ", event.headers);
   const spHmac = event.headers["Sp-Hmac"];
   const eventHmac = crypto
     .createHash("sha256", SP_SHARED_SECRET)
