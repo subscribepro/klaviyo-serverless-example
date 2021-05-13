@@ -22,7 +22,6 @@ const klaviyoTrack = async (payload) => {
 };
 
 exports.handler = async (event, context) => {
-  console.log("Verifying hmac", SP_SHARED_SECRET);
   // Netlify event headers are all lowercase
   const spHmac = event.headers["sp-hmac"];
   const eventHmac = crypto
@@ -36,19 +35,15 @@ exports.handler = async (event, context) => {
       body: `Authorization failed`,
     };
   }
-
-  console.log("Parsing body");
   let webhook;
   try {
-    webhook = JSON.parse(event.body);
+    webhook = JSON.parse(event.body).webhook_event;
   } catch (error) {
     return {
       statusCode: 400,
       body: `Bad request`,
     };
   }
-  console.log(webhook);
-  console.log("Checking types");
   if (!HANDLED_TYPES.includes(webhook.type)) {
     return {
       statusCode: 200,
