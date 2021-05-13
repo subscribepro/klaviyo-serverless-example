@@ -37,6 +37,7 @@ exports.handler = async (event, context) => {
   }
   let webhook;
   try {
+    // Netlify body is JSON string and webhook_event is also a JSON string
     webhook = JSON.parse(JSON.parse(event.body).webhook_event);
   } catch (error) {
     return {
@@ -44,20 +45,20 @@ exports.handler = async (event, context) => {
       body: `Bad request`,
     };
   }
-  console.log(webhook);
   if (!HANDLED_TYPES.includes(webhook.type)) {
-    console.log("Dropping webhook", webhook.type);
+    console.log("Dropping event ", webhook.type);
     return {
       statusCode: 200,
       body: `Webhook of type ${webhook.type} is not handled!`,
     };
   }
 
+  // SP data is also a JSON string
   const webhookData = JSON.parse(webhook.data);
 
-  console.log("Proceeding to make klaviyo requests");
   let payload;
   if (webhook.type === "customer.subscribed") {
+    console.log("Processing customer ", webhookData.customer_id);
     payload = {
       event: "Customer Subscribed",
       customer_properties: {
@@ -70,6 +71,7 @@ exports.handler = async (event, context) => {
   }
 
   if (webhook.type === "subscription.created") {
+    console.log("Processing subscription ", webhookData.subscription.id);
     payload = {
       event: "Subscription Created",
       customer_properties: {
