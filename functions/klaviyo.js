@@ -22,14 +22,14 @@ const klaviyoTrack = async (payload) => {
 };
 
 exports.handler = async (event, context) => {
-  console.log("Verifying hmac");
+  console.log("Verifying hmac", SP_SHARED_SECRET);
   const spHmac = event.headers["sp-hmac"];
   const eventHmac = crypto
     .createHash("sha256", SP_SHARED_SECRET)
-    .update(event.body)
-    .digest("base64");
+    .update(event.body);
 
-  if (spHmac !== eventHmac) {
+  console.log(spHmac, eventHmac.digest("base64"), eventHmac.digest("hex"));
+  if (spHmac !== eventHmac.digest("hex")) {
     return {
       statusCode: 403,
       body: `Authorization failed`,
