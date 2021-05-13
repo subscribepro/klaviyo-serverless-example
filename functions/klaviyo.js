@@ -23,12 +23,13 @@ const klaviyoTrack = async (payload) => {
 
 exports.handler = async (event, context) => {
   console.log("Verifying hmac", SP_SHARED_SECRET);
+  // Netlify event headers are all lowercase
   const spHmac = event.headers["sp-hmac"];
   const eventHmac = crypto
     .createHash("sha256", SP_SHARED_SECRET)
     .update(event.body);
 
-  console.log(spHmac, eventHmac.digest("base64"), eventHmac.digest("hex"));
+  console.log(spHmac, eventHmac.digest("hex"));
   if (spHmac !== eventHmac.digest("hex")) {
     return {
       statusCode: 403,
