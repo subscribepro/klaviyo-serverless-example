@@ -22,9 +22,8 @@ const klaviyoTrack = async (payload) => {
 };
 
 exports.handler = async (event, context) => {
-  console.log(event.body);
-  console.log("Hash verification ", event.headers);
-  const spHmac = event.headers["Sp-Hmac"];
+  console.log("Verifying hmac");
+  const spHmac = event.headers["sp-hmac"];
   const eventHmac = crypto
     .createHash("sha256", SP_SHARED_SECRET)
     .update(event.body)
@@ -58,7 +57,7 @@ exports.handler = async (event, context) => {
 
   const webhookData = JSON.parse(webhook.data);
 
-  console.log(webhookData);
+  console.log("Proceeding to make klaviyo requests");
   let payload;
   if (webhook.type === "customer.subscribed") {
     payload = {
