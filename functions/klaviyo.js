@@ -1,12 +1,13 @@
 const fetch = require("node-fetch");
+const crypto = require("crypto");
 
 const HANDLED_TYPES = ["customer.subscribed", "subscription.created"];
 
 const KLAVIYO_API_KEY = process.env.KLAVIYO_API_KEY;
+const SP_SHARED_SECRET = process.env.SP_SHARED_SECRET;
 const klaviyoBase = "https://a.klaviyo.com/api";
 
 const klaviyoTrack = async (payload) => {
-  return;
   try {
     await fetch(
       `${klaviyoBase}/track?data=${Buffer.from(
@@ -20,17 +21,22 @@ const klaviyoTrack = async (payload) => {
   }
 };
 
-// const klaviyoAddList = async (list, email) => {
-//   await fetch(`${klaviyoBase}/v2/list/${list}/members`, {
-//     method: "POST",
-//     body: {
-//       api_key: KLAVIYO_API_KEY,
-//       profiles: [{ email }],
-//     },
-//   });
-// };
-
 exports.handler = async (event, context) => {
+  console.log("Hash verification");
+  const spHmac = event.headers["Sp-Hmac"];
+  const eventHmac = crypto
+    .createHash("sha256", SP_SHARED_SECRET)
+    .update(event.body)
+    .digest("base64");
+
+  if (spHmac !== eventHmac) {
+    return {
+      statusCode: 403,
+      body: `Authorization failed`,
+    };
+  }
+
+  console.log("Parsing body");
   let webhook;
   try {
     webhook = JSON.parse(event.body);
@@ -40,6 +46,8 @@ exports.handler = async (event, context) => {
       body: `Bad request`,
     };
   }
+  console.log(webhook);
+  console.log("Checking types");
   if (!HANDLED_TYPES.includes(webhook.type)) {
     return {
       statusCode: 200,
@@ -48,6 +56,7 @@ exports.handler = async (event, context) => {
   }
 
   const webhookData = JSON.parse(webhook.data);
+
   console.log(webhookData);
   let payload;
   if (webhook.type === "customer.subscribed") {

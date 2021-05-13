@@ -3,3 +3,4 @@
   functions = "functions"
 [template.environment]
   KLAVIYO_API_KEY = "Change to your Klaviyo API Key"
+  SP_SHARED_SECRET = "Change to you SP webhook shared secret"
