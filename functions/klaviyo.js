@@ -26,11 +26,11 @@ exports.handler = async (event, context) => {
   // Netlify event headers are all lowercase
   const spHmac = event.headers["sp-hmac"];
   const eventHmac = crypto
-    .createHash("sha256", SP_SHARED_SECRET)
-    .update(event.body);
+    .createHmac("sha256", SP_SHARED_SECRET)
+    .update(event.body)
+    .digest("hex");
 
-  console.log(spHmac, eventHmac.digest("hex"));
-  if (spHmac !== eventHmac.digest("hex")) {
+  if (spHmac !== eventHmac) {
     return {
       statusCode: 403,
       body: `Authorization failed`,
