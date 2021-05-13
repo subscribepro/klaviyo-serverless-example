@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 
 const HANDLED_TYPES = ["customer.subscribed", "subscription.created"];
 
-const KLAVIYO_API_KEY = process.env.KLAVIYO_API_KEY || "SWzHxD";
+const KLAVIYO_API_KEY = process.env.KLAVIYO_API_KEY;
 const klaviyoBase = "https://a.klaviyo.com/api";
 
 const klaviyoTrack = async (payload) => {

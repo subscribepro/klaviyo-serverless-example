@@ -1,3 +1,6 @@
 [build]
   command = "#"
+  publish = ""
   functions = "functions"
+[template.environment]
+  KLAVIYO_API_KEY = "change me for your secret token"
