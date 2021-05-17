@@ -76,14 +76,20 @@ For this example, we will be setting up a Klaviyo Flow using Subscribe Pro's `cu
 
     ![Klaviyo Example Step 17](/images/klaviyo-example-docs-16.png)
 
-18. Drag an Email into the flow underneath the Trigger and configure the contents of this email however you'd like. In our example, we'll select a Klaviyo template and add in the customer's name, email address, and the product SKU that they subscribed to.
+18. Drag an Email into the flow underneath the Trigger and configure the contents of this email however you'd like. In our example, we'll select a Klaviyo template and add in the customer's name, email address, and the product SKU that they subscribed to. (See [Klaviyo's docs](https://help.klaviyo.com/hc/en-us/articles/115002779071-About-Using-Event-Variables-to-Personalize-Flows#emails5) for more information about event variables.)
 
     ![Klaviyo Example Step 18](/images/klaviyo-example-docs-17.png)
 
-19. We can then click "Manage Flow" and click "Back-Populate Flow Recipients" to send our new Subscription Created email to the test customer we created.
+    ![Klaviyo Example Step 18b](/images/klaviyo-example-docs-17b.png)
+
+19. After creating the email template, we can use the Preview feature using our sample customer to ensure we've used the right variable names and test the appearance of the email.
+
+    ![Klaviyo Example Step 18c](/images/klaviyo-example-docs-17c.png)
+
+20. We can then click "Manage Flow" and click "Back-Populate Flow Recipients" to send our new Subscription Created email to the sample customer we created.
 
     ![Klaviyo Example Step 19](/images/klaviyo-example-docs-19.png)
 
-20. Finally, we see that our email has sent and includes the information we pulled from the Subscribe Pro webhook.
+21. Finally, we see that our email has sent and includes the information we pulled from the Subscribe Pro webhook.
 
     ![Klaviyo Example Step 20](/images/klaviyo-example-docs-18.png)
